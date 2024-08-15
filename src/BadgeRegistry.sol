@@ -13,7 +13,7 @@ contract BadgeRegistry is IBadgeRegistry {
   /// @param badge Badge data struct
   function create(Badge calldata badge) public returns (bytes32) {
     bytes32 badgeId = generateId(badge);
-    if (badges[badgeId].data.length > 0) revert BadgeAlreadyRegistered();
+    if (bytes(badges[badgeId].name).length > 0) revert BadgeAlreadyRegistered();
 
     badges[badgeId] = badge;
     emit BadgeRegistered(badgeId, msg.sender, badge.name);
