@@ -33,6 +33,7 @@
     "prettier:write": "prettier --write \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\"",
     "deploy": "forge create GrantRegistry --rpc-url $RPC_URL --private-key $PRIVATE_KEY",
     "verify": "forge verify-contract $ADDRESS_RESOLVER --rpc-url $RPC_URL --etherscan-api-key $API_KEY_ARBISCAN",
-    "test:grant": "forge test --match-test grant --fork-url $RPC_URL -vvv --via-ir"
+    "test:grant": "forge test --match-test grant --fork-url $RPC_URL -vvv --via-ir",
+    "test:badge": "forge test --match-test badge --fork-url $RPC_URL -vvv --via-ir"
   }
 }
