@@ -1,12 +1,12 @@
 {
-  "name": "blockful-foundry-boilerplate",
-  "description": "Start your Solidity projects with ease",
+  "name": "grant-application-egistry",
+  "description": "Register your Grant Application",
   "version": "1.0.0",
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.2"
+    "@openzeppelin/contracts": "^5.0.2",
+    "forge-std": "github:foundry-rs/forge-std#v1.8.1"
   },
   "devDependencies": {
-    "forge-std": "github:foundry-rs/forge-std#v1.8.1",
     "prettier": "^3.0.0",
     "solhint": "^3.6.2"
   },
@@ -17,7 +17,11 @@
     "foundry",
     "smart-contracts",
     "solidity",
-    "blockful"
+    "blockful",
+    "karma",
+    "karmagap",
+    "trustful",
+    "grantprograms"
   ],
   "scripts": {
     "clean": "rm -rf cache out",
@@ -26,6 +30,9 @@
     "lint": "bun run lint:sol && bun run prettier:check",
     "lint:sol": "forge fmt --check && bun solhint {script,src,test}/**/*.sol",
     "prettier:check": "prettier --check \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\"",
-    "prettier:write": "prettier --write \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\""
+    "prettier:write": "prettier --write \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\"",
+    "deploy": "forge create GrantRegistry --rpc-url $RPC_URL --private-key $PRIVATE_KEY",
+    "verify": "forge verify-contract $ADDRESS_RESOLVER --rpc-url $RPC_URL --etherscan-api-key $API_KEY_ARBISCAN",
+    "test:grant": "forge test --match-test grant --fork-url $RPC_URL -vvv --via-ir"
   }
 }

@@ -1,4 +1,4 @@
-# Blockful's Froundry Boilerplate
+# Grant Application Registry
 
 ## Getting Started
 
