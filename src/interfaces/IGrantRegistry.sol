@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
-/// @title Grant Registry Interface
-/// @author KarmaGap | 0xneves.eth
 interface IGrantRegistry {
   error GrantAlreadyExists();
   error GrantNonExistant();

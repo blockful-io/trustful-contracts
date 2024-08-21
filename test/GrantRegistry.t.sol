@@ -15,7 +15,7 @@ contract TestGrantRegistry is Test {
 
   function test_grant_registration() public {
     bytes32 grantId = registerGrant();
-    assertEq(uint256(registry.grant(grantId).status), uint256(IGrantRegistry.Status.Proposed));
+    assertEq(uint256(registry.getGrant(grantId).status), uint256(IGrantRegistry.Status.Proposed));
   }
 
   function test_grant_removal() public {
@@ -45,7 +45,7 @@ contract TestGrantRegistry is Test {
 
   function test_grant_update() public {
     bytes32 grantId = registerGrant();
-    IGrantRegistry.Grant memory grant = registry.grant(grantId);
+    IGrantRegistry.Grant memory grant = registry.getGrant(grantId);
     grant.status = IGrantRegistry.Status.InProgress;
     vm.prank(binance);
     registry.update(grantId, grant);
@@ -110,8 +110,8 @@ contract TestGrantRegistry is Test {
 
     // Checking if the grant was registered
     bytes32 grantId = registry.generateId(grant);
-    assertEq(registry.grant(grantId).network, 42161);
-    assertEq(registry.grant(grantId).grantee, address(0x5));
+    assertEq(registry.getGrant(grantId).network, 42161);
+    assertEq(registry.getGrant(grantId).grantee, address(0x5));
 
     return grantId;
   }
