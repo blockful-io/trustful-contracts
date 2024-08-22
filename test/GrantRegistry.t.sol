@@ -7,7 +7,7 @@ import { GrantRegistry, IGrantRegistry } from "../src/GrantRegistry.sol";
 contract TestGrantRegistry is Test {
   GrantRegistry public registry;
 
-  address binance = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
+  address Bianco = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
 
   function setUp() public {
     registry = new GrantRegistry();
@@ -20,7 +20,7 @@ contract TestGrantRegistry is Test {
 
   function test_grant_removal() public {
     bytes32 grantId = registerGrant();
-    vm.prank(binance);
+    vm.prank(Bianco);
     registry.remove(grantId);
   }
 
@@ -47,13 +47,13 @@ contract TestGrantRegistry is Test {
     bytes32 grantId = registerGrant();
     IGrantRegistry.Grant memory grant = registry.getGrant(grantId);
     grant.status = IGrantRegistry.Status.InProgress;
-    vm.prank(binance);
+    vm.prank(Bianco);
     registry.update(grantId, grant);
   }
 
   function test_grant_transfer_ownership() public {
     bytes32 grantId = registerGrant();
-    vm.prank(binance);
+    vm.prank(Bianco);
     registry.transferOwnership(grantId, address(0x7));
   }
 
@@ -94,9 +94,10 @@ contract TestGrantRegistry is Test {
 
     // Preparing the grant struct in the Arbitrum chain
     GrantRegistry.Grant memory grant = IGrantRegistry.Grant({
-      network: 42161,
+      id: uint256(1),
+      chain: 42161,
       grantee: address(0x5),
-      protocol: "Test",
+      grantProgramLabel: "Test",
       project: "Test",
       externalLinks: new string[](0),
       startDate: block.timestamp,
@@ -106,11 +107,11 @@ contract TestGrantRegistry is Test {
     });
 
     // Registering the grant
-    registry.register(grant, binance);
+    registry.register(grant, Bianco);
 
     // Checking if the grant was registered
     bytes32 grantId = registry.generateId(grant);
-    assertEq(registry.getGrant(grantId).network, 42161);
+    assertEq(registry.getGrant(grantId).chain, 42161);
     assertEq(registry.getGrant(grantId).grantee, address(0x5));
 
     return grantId;

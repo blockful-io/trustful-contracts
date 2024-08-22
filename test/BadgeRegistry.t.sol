@@ -7,7 +7,7 @@ import { BadgeRegistry, IBadgeRegistry } from "../src/BadgeRegistry.sol";
 contract TestBadgeRegistry is Test {
   BadgeRegistry public registry;
 
-  address binance = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
+  address Bianco = 0xF977814e90dA44bFA03b6295A0616a897441aceC;
 
   function setUp() public {
     registry = new BadgeRegistry();
