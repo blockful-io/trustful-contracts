@@ -94,7 +94,7 @@ contract TestGrantRegistry is Test {
 
     // Preparing the grant struct in the Arbitrum chain
     GrantRegistry.Grant memory grant = IGrantRegistry.Grant({
-      id: uint256(1),
+      id: bytes32(0),
       chain: 42161,
       grantee: address(0x5),
       grantProgramLabel: "Test",

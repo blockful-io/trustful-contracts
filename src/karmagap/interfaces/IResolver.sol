@@ -28,8 +28,8 @@ interface IResolver {
   struct GrantStory {
     uint256 timestamp;
     bytes32 txUID;
-    bytes32[] badges;
-    uint8[] scores;
+    bytes32[] badgeIds;
+    uint8[] badgeScores;
     uint256 averageScore;
   }
 

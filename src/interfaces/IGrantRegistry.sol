@@ -14,7 +14,7 @@ interface IGrantRegistry {
   /// Emitted when the grant is sucessfuly registered.
   event GrantRegistered(
     bytes32 indexed grantId,
-    uint256 indexed id,
+    bytes32 indexed id,
     address indexed grantee,
     string grantProgramLabel,
     address manager
@@ -22,7 +22,7 @@ interface IGrantRegistry {
   /// Emitted when the grant is updated.
   event GrantUpdated(
     bytes32 indexed grantId,
-    uint256 indexed id,
+    bytes32 indexed id,
     string grantProgramLabel,
     Status status
   );
@@ -37,7 +37,7 @@ interface IGrantRegistry {
 
   /// Grant Struct.
   struct Grant {
-    uint256 id; // Optional unique identifier for the grant program to fetch the data
+    bytes32 id; // Optional unique identifier for the grant program to fetch the data
     uint256 chain; // Blockchain network where the grant is being developed
     address grantee; // Address of the person responsible for delivering and receiving the grant reward
     string grantProgramLabel; // Name of the protocol/community that issued the grant
