@@ -3,7 +3,6 @@ pragma solidity ^0.8.25;
 
 import { IResolver } from "./interfaces/IResolver.sol";
 import { ITrustfulScorer } from "./interfaces/ITrustfulScorer.sol";
-import { IGrantRegistry } from "./interfaces/IGrantRegistry.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 /// @title Resolver
