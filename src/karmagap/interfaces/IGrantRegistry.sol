@@ -4,6 +4,7 @@ pragma solidity ^0.8.25;
 interface IGrantRegistry {
   /// Grant Struct.
   struct Grant {
+    uint256 id; // Optional unique identifier for the grant program to fetch the data
     uint256 chain; // Blockchain network where the grant is being developed
     address grantee; // Address of the person responsible for delivering and receiving the grant reward
     string grantProgramLabel; // Name of the protocol/community that issued the grant
