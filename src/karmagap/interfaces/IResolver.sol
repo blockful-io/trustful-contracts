@@ -30,12 +30,14 @@ interface IResolver {
     bytes32 txUID;
     bytes32[] badges;
     uint8[] scores;
+    uint256 averageScore;
   }
 
   /// Struct to track current state of the grant program.
   struct GrantProgram {
-    uint256 reviewCount;
-    uint256 averageScore;
+    uint256 reviewCount; // The total amount of reviews for the grant program.
+    uint256 validReviewCount; // Only counts the last review by a GrantStory.
+    uint256 averageScore; // The average score of the grant program.
   }
 
   /// @notice Creates a new story review for a grant program.

@@ -58,19 +58,37 @@ contract Resolver is IResolver, Ownable {
       // calculate the average score by dividing the sum by the number of scores
       averageScore /= scores.length;
 
+      // calculate the average score of the grant program
+      uint256 lastStoryIndex = getGrantStorieLength(grantUID);
       // if the grant program has no reviews yet
-      if (grantProgram.reviewCount == 0) {
+      if (grantProgram.validReviewCount == 0) {
         grantProgram.averageScore = averageScore;
-      } else {
-        // if the grant program is already reviewed
+        grantProgram.validReviewCount++;
+      } else if (lastStoryIndex == 0) {
+        // if the grant program is already reviewed by another grant
+        // but this is the first story of this grant
+        // X = (A1 * C + A2) / C + 1
         grantProgram.averageScore =
-          (grantProgram.averageScore * grantProgram.reviewCount + averageScore) /
-          (grantProgram.reviewCount++);
+          (grantProgram.averageScore * grantProgram.validReviewCount + averageScore) /
+          (grantProgram.validReviewCount++);
+      } else {
+        // if the grant program has already been reviewed by this grant
+        // we need to revert the last average score and calculate the new one
+        uint256 lastReviewScore = _stories[grantUID][lastStoryIndex - 1].averageScore;
+        uint256 lastAverageScore = getGrantProgramScore(grantProgramLabel);
+        // A1 = (X * ( C + 1 ) - A2) / C
+        uint256 lastLastAverageScore = ((lastAverageScore * grantProgram.validReviewCount) -
+          lastReviewScore) / (grantProgram.validReviewCount - 1);
+        // Recalculate the average score with the most recent review
+        grantProgram.averageScore =
+          (lastLastAverageScore * (grantProgram.validReviewCount - 1) + averageScore) /
+          (grantProgram.validReviewCount);
       }
+      grantProgram.reviewCount++;
     }
 
     // create the story and push to the map
-    GrantStory memory story = GrantStory(block.timestamp, txUID, badges, scores);
+    GrantStory memory story = GrantStory(block.timestamp, txUID, badges, scores, averageScore);
     _stories[grantUID].push(story);
 
     // update the grant program review count and average score
@@ -82,7 +100,7 @@ contract Resolver is IResolver, Ownable {
       grantProgramLabel,
       block.timestamp,
       averageScore,
-      grantProgram.reviewCount
+      grantProgram.validReviewCount
     );
   }
 
@@ -103,12 +121,15 @@ contract Resolver is IResolver, Ownable {
   }
 
   /// @inheritdoc IResolver
-  function getGrantStories(bytes32 grantUID) public view returns (GrantStory[] memory) {
+  function getGrantStories(bytes32 grantUID) external view returns (GrantStory[] memory) {
     return _stories[grantUID];
   }
 
   /// @inheritdoc IResolver
-  function getGrantStorie(bytes32 grantUID, uint256 index) public view returns (GrantStory memory) {
+  function getGrantStorie(
+    bytes32 grantUID,
+    uint256 index
+  ) external view returns (GrantStory memory) {
     return _stories[grantUID][index];
   }
 
@@ -120,14 +141,14 @@ contract Resolver is IResolver, Ownable {
   /// @inheritdoc IResolver
   function getGrantProgramReviewCount(
     string memory grantProgramLabel
-  ) public view returns (uint256) {
-    return _grantPrograms[grantProgramLabel].reviewCount;
+  ) external view returns (uint256) {
+    return _grantPrograms[grantProgramLabel].validReviewCount;
   }
 
   /// @inheritdoc IResolver
   function getGrantProgramScore(string memory grantProgramLabel) public view returns (uint256) {
     GrantProgram memory grantProgram = _grantPrograms[grantProgramLabel];
-    if (grantProgram.reviewCount == 0) revert GrantProgramNonExistant();
+    if (grantProgram.validReviewCount == 0) revert GrantProgramNonExistant();
     if (grantProgram.averageScore == 0) revert GrantProgramNotReviewed();
     return grantProgram.averageScore;
   }
