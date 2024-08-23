@@ -104,7 +104,7 @@ contract TrustfulScorer is ITrustfulScorer {
   /// @inheritdoc ITrustfulScorer
   function removeBadgeFromScorer(uint256 scorerId, bytes32 badgeId) external onlyManager(scorerId) {
     Scorer storage scorer = _scorers[scorerId];
-    if (!scorer.badgeIds.contains(badgeId)) revert BadgeRegistered();
+    if (!scorer.badgeIds.contains(badgeId)) revert BadgeNotRegistered();
 
     scorer.badgeIds.remove(badgeId);
     scorer.badgeScores[badgeId] = 0;
