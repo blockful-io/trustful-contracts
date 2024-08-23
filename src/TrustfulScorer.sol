@@ -30,7 +30,7 @@ contract TrustfulScorer is ITrustfulScorer {
 
   /// Map scorer ID to the scorer struct.
   mapping(uint256 => Scorer) private _scorers;
-  /// Map scorer ID to the manager address of that socorer.
+  /// Map scorer ID to the manager address of that scorer.
   mapping(uint256 => address) private _managers;
   /// Map scorer ID to the resolver address of that scorer.
   mapping(uint256 => address) private _resolvers;
