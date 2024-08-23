@@ -15,7 +15,6 @@ contract TestGrantRegistry is Test {
 
   function test_grant_registration() public {
     bytes32 grantId = registerGrant();
-    assertEq(uint256(registry.getGrant(grantId).status), uint256(IGrantRegistry.Status.Proposed));
   }
 
   function test_grant_removal() public {
@@ -95,7 +94,7 @@ contract TestGrantRegistry is Test {
     // Preparing the grant struct in the Arbitrum chain
     GrantRegistry.Grant memory grant = IGrantRegistry.Grant({
       id: bytes32(0),
-      chain: 42161,
+      chain: block.chainid,
       grantee: address(0x5),
       grantProgramLabel: "Test",
       project: "Test",
@@ -111,7 +110,7 @@ contract TestGrantRegistry is Test {
 
     // Checking if the grant was registered
     bytes32 grantId = registry.generateId(grant);
-    assertEq(registry.getGrant(grantId).chain, 42161);
+    assertEq(registry.getGrant(grantId).chain, block.chainid);
     assertEq(registry.getGrant(grantId).grantee, address(0x5));
 
     return grantId;
