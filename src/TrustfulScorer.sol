@@ -93,7 +93,7 @@ contract TrustfulScorer is ITrustfulScorer {
     uint256 badgeScore
   ) external onlyManager(scorerId) {
     Scorer storage scorer = _scorers[scorerId];
-    if (scorer.badgeIds.contains(badgeId)) revert BadgeNotRegistered();
+    if (scorer.badgeIds.contains(badgeId)) revert BadgeRegistered();
 
     scorer.badgeIds.add(badgeId);
     scorer.badgeScores[badgeId] = badgeScore * 10 ** scorer.scoresDecimals;
