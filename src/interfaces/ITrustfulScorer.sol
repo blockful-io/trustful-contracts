@@ -29,6 +29,8 @@ interface ITrustfulScorer {
   event BadgeRemovedFromAddr(address indexed account, uint256 indexed scorerId, bytes32 badgeId);
   /// Emitted when the manager changes to a new address.
   event ManagerUpdated(uint256 indexed scorerId, address oldManager, address newManager);
+  /// Emitted when the resolver changes to a new address.
+  event ResolverUpdated(uint256 indexed scorerId, address oldResolver, address newResolver);
   /// Emitted when the metadata of a scorer changes.
   event TokenURIUpdated(uint256 indexed scorerId, string metadata);
 
@@ -91,6 +93,13 @@ interface ITrustfulScorer {
   /// @param scorerId Unique identifier of the scorer.
   /// @param newManager The address of the new manager.
   function setNewManager(uint256 scorerId, address newManager) external;
+
+  /// @notice Set a new resolver for a scorer.
+  /// Requirements:
+  /// - Only the manager of the scorer can call this function.
+  /// @param scorerId Unique identifier of the scorer.
+  /// @param newResolver The address of the new manager.
+  function setNewResolver(uint256 scorerId, address newResolver) external;
 
   /// @notice Set a new scorer metadata.
   /// Requirements:

@@ -144,6 +144,13 @@ contract TrustfulScorer is ITrustfulScorer {
   }
 
   /// @inheritdoc ITrustfulScorer
+  function setNewResolver(uint256 scorerId, address newResolver) external onlyManager(scorerId) {
+    address oldResolver = _managers[scorerId];
+    _managers[scorerId] = newResolver;
+    emit ResolverUpdated(scorerId, oldResolver, newResolver);
+  }
+
+  /// @inheritdoc ITrustfulScorer
   function setTokenURI(uint256 scorerId, string memory metadata) external onlyManager(scorerId) {
     _scorers[scorerId].metadata = metadata;
     emit TokenURIUpdated(scorerId, metadata);
