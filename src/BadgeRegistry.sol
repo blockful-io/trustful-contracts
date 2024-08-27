@@ -9,24 +9,29 @@ contract BadgeRegistry is IBadgeRegistry {
   /// Map of badges registered in the registry
   mapping(bytes32 => Badge) public badges;
 
-  /// @notice Registers a badge in the registry
-  /// @param badge Badge data struct
+  /// @inheritdoc IBadgeRegistry
   function create(Badge calldata badge) public returns (bytes32) {
     bytes32 badgeId = generateId(badge);
-    if (bytes(badges[badgeId].name).length > 0) revert BadgeAlreadyRegistered();
 
+    if (bytes(badge.name).length == 0) revert InvalidBadgeNameLength();
+    if (bytes(badges[badgeId].name).length > 0) revert BadgeAlreadyRegistered();
     badges[badgeId] = badge;
+
     emit BadgeRegistered(badgeId, msg.sender, badge.name);
     return badgeId;
   }
 
-  /// @notice Gets a badge from the registry
+  /// @inheritdoc IBadgeRegistry
   function getBadge(bytes32 badgeId) public view returns (Badge memory) {
     return badges[badgeId];
   }
 
-  /// @notice Generates a badge ID
-  /// @param badge Badge data struct
+  /// @inheritdoc IBadgeRegistry
+  function badgeExists(bytes32 badgeId) public view returns (bool) {
+    return bytes(badges[badgeId].name).length > 0;
+  }
+
+  /// @inheritdoc IBadgeRegistry
   function generateId(Badge calldata badge) public pure returns (bytes32) {
     return keccak256(abi.encode(badge));
   }
