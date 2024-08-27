@@ -3,7 +3,7 @@ pragma solidity ^0.8.25;
 
 import { IResolver } from "./interfaces/IResolver.sol";
 import { ITrustfulScorer } from "./interfaces/ITrustfulScorer.sol";
-import { EnumerableSetLib } from "@solady/utils/EnumerableSetLib.sol";
+import { EnumerableSetLib } from "./utils/EnumerableSetLib.sol";
 
 /// @title Trustful Scorer
 /// @author KarmaGap | 0xneves.eth
