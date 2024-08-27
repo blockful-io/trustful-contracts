@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
+/// @notice The interface of the {GrantRegistry} contract.
 interface IGrantRegistry {
   /// Emitted when a grant already exists in the Registry.
   error GrantAlreadyExists();
