@@ -10,7 +10,7 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 /// @notice This is the implementation of the Trustful Resolver contract.
 /// This contract is used to resolve scores and badges from Trustful.
 contract Resolver is IResolver, Ownable {
-  /// Scorer contract address
+  /// Trustful Scorer contract address
   address public scorer;
   /// EAS Resolver contract address
   address public easResolver;
