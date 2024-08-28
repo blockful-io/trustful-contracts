@@ -67,7 +67,7 @@ contract GrantRegistry is IGrantRegistry {
   }
 
   /// @inheritdoc IGrantRegistry
-  function getManager(bytes32 grantUID) public view returns (address) {
+  function getManagerAddress(bytes32 grantUID) public view returns (address) {
     return _managers[grantUID];
   }
 

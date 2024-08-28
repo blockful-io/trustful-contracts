@@ -97,7 +97,7 @@ interface IGrantRegistry {
 
   /// @notice Get the manager address of a grant.
   /// @param grantId The grant ID to return the manager address.
-  function getManager(bytes32 grantId) external view returns (address);
+  function getManagerAddress(bytes32 grantId) external view returns (address);
 
   /// @notice Generate a unique ID from a grant.
   /// @dev Have in mind that the generated ID will be unique at the time
