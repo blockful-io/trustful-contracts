@@ -5,12 +5,12 @@ import { IGrantRegistry } from "./interfaces/IGrantRegistry.sol";
 
 /// @title Grant Registry
 /// @author KarmaGap | 0xneves.eth
-/// @notice Registry of grant applications.
-/// The Grant Programs can issue and manage grants.
+/// @notice This is a temporary solution to create a relation
+/// between `programId` and `grantId` in the KarmaGap platform.
 contract GrantRegistry is IGrantRegistry {
-  /// Map the grant ID to the grant data
+  /// Map the grant ID to the grant data.
   mapping(bytes32 => Grant) private _grants;
-  /// Map the grant ID to its grant manager
+  /// Map the grant ID to its grant manager.
   mapping(bytes32 => address) private _managers;
 
   /// @inheritdoc IGrantRegistry

@@ -85,7 +85,7 @@ interface IResolver {
   function setEASResolverAddress(address newEasResolverAddr) external;
 
   /// @dev This implementation is required by {TrustfulScorer}.
-  /// @param grantProgramUID Encoded grant program UID.
+  /// @param grantProgramUID Abi Encoded grant program UID.
   /// @return success If the operation succeeded.
   /// @return score The average score of the grant program.
   function scoreOf(
