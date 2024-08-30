@@ -4,8 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2",
-    "forge-std": "github:foundry-rs/forge-std#v1.8.1",
-    "solady": "^0.0.234"
+    "forge-std": "github:foundry-rs/forge-std#v1.8.1"
   },
   "devDependencies": {
     "prettier": "^3.0.0",
@@ -35,6 +34,7 @@
     "deploy": "forge create GrantRegistry --rpc-url $RPC_URL --private-key $PRIVATE_KEY",
     "verify": "forge verify-contract $ADDRESS_RESOLVER --rpc-url $RPC_URL --etherscan-api-key $API_KEY_ARBISCAN",
     "test:grant": "forge test --match-test grant --fork-url $RPC_URL -vvv --via-ir",
-    "test:badge": "forge test --match-test badge --fork-url $RPC_URL -vvv --via-ir"
+    "test:badge": "forge test --match-test badge --fork-url $RPC_URL -vvv --via-ir",
+    "test:scorer": "forge test --match-test scorer --fork-url $RPC_URL -vvv --via-ir"
   }
 }

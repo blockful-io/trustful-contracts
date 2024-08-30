@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
+/// @notice The interface of the {TrustfulScorer} contract.
 interface ITrustfulScorer {
   /// Emitted when the account has no badges.
   error AccountHasNoBadges();
@@ -8,12 +9,14 @@ interface ITrustfulScorer {
   error BadgeNotRegistered();
   /// Emitted when the badge is already registered.
   error BadgeRegistered();
-  /// Emitted when the call to the resolver is fails.
-  error InvalidResolverCall();
+  /// Emitted for invalid badge ID.
+  error InvalidBadgeId();
   /// Emitted when the length does not match criteria.
   error InvalidLength();
   /// Emitted when the manager is invalid.
   error InvalidManager();
+  /// Emitted when the call to the resolver is fails.
+  error InvalidResolverCall();
   /// Emitted when the scorer is not registered.
   error ScorerNotRegistered();
 
@@ -58,8 +61,13 @@ interface ITrustfulScorer {
   ) external returns (uint256 scorerId);
 
   /// @notice Adds a badge to a scorer.
+  /// NOTE: Will fetch the decimals of the scorer to normalize the score.
+  ///
   /// Requirements:
   /// - Only the manager of the scorer can call this function.
+  /// - The badge must not be already registered.
+  /// - The badge ID must not be zero.
+  ///
   /// @param scorerId Unique identifier of the scorer.
   /// @param badgeId The badge ID.
   /// @param badgeScore The badge score.
@@ -68,6 +76,7 @@ interface ITrustfulScorer {
   /// @notice Removes a badge from a scorer.
   /// Requirements:
   /// - Only the manager of the scorer can call this function.
+  /// - The badge must be already registered.
   /// @param scorerId Unique identifier of the scorer.
   /// @param badgeId The badge ID.
   function removeBadgeFromScorer(uint256 scorerId, bytes32 badgeId) external;
@@ -75,6 +84,8 @@ interface ITrustfulScorer {
   /// @notice Adds a badge to an account.
   /// Requirements:
   /// - Only the manager of the scorer can call this function.
+  /// - The badge must be already registered.
+  /// - The badge ID must not be zero.
   /// @param account The address of the account.
   /// @param scorerId Unique identifier of the scorer.
   function registerBadgeToAddr(address account, uint256 scorerId, bytes32 badgeId) external;
@@ -82,6 +93,7 @@ interface ITrustfulScorer {
   /// @notice Removes a badge from an account.
   /// Requirements:
   /// - Only the manager of the scorer can call this function.
+  /// - The badge must be already registered.
   /// @param account The address of the account.
   /// @param scorerId Unique identifier of the scorer.
   /// @param badgeId The badge ID.
@@ -108,6 +120,10 @@ interface ITrustfulScorer {
   /// @param metadata The metadata of the scorer.
   function setTokenURI(uint256 scorerId, string memory metadata) external;
 
+  /// @notice Returns true if the scorer exists.
+  /// @param scorerId Unique identifier of the scorer.
+  function scorerExists(uint256 scorerId) external view returns (bool);
+
   /// @notice Request a score to the resolver by providing arbitrary data.
   ///
   /// Requirements:
@@ -122,6 +138,7 @@ interface ITrustfulScorer {
   ///
   /// Requirements:
   /// - The scorer must exist.
+  /// - The account must have badges.
   ///
   /// @param account The address of the account.
   /// @param scorerId Unique identifier of the scorer.
@@ -146,10 +163,12 @@ interface ITrustfulScorer {
   /// Requirements:
   /// - The scorer must exist.
   /// @param scorerId Unique identifier of the scorer.
-  function getBadgesIds(uint256 scorerId) external view returns (bytes32[] memory);
+  function getBadgeIds(uint256 scorerId) external view returns (bytes32[] memory);
 
+  /// @notice Return the scores of all badges in a scorer.
   /// @param scorerId Unique identifier of the scorer.
-  /// @return The scores of all badges in a scorer.
+  /// Requirements:
+  /// - The scorer must exist.
   function getBadgesScores(uint256 scorerId) external view returns (uint256[] memory);
 
   /// @notice The score of a given badge
