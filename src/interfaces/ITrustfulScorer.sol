@@ -153,7 +153,7 @@ interface ITrustfulScorer {
   /// Requirements:
   /// - The scorer must exist.
   /// @param scorerId Unique identifier of the scorer.
-  function getBadgesIds(uint256 scorerId) external view returns (bytes32[] memory);
+  function getBadgeIds(uint256 scorerId) external view returns (bytes32[] memory);
 
   /// @param scorerId Unique identifier of the scorer.
   /// @return The scores of all badges in a scorer.

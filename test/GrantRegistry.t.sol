@@ -14,7 +14,7 @@ contract TestGrantRegistry is Test {
   }
 
   function test_grant_registration() public {
-    bytes32 grantId = registerGrant();
+    registerGrant();
   }
 
   function test_grant_removal() public {

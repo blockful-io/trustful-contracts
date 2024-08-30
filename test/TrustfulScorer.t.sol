@@ -86,7 +86,7 @@ contract TestGrantRegistry is Test {
     assert(manager == newManager);
 
     // Get Badges Ids
-    bytes32[] memory badges = scorer.getBadgesIds(scorerId);
+    bytes32[] memory badges = scorer.getBadgeIds(scorerId);
     assert(badges[0] == badgeIds[0]);
     assert(badges[1] == badgeIds[1]);
     assert(badges[2] == badgeIds[2]);

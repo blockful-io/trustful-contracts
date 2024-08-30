@@ -232,7 +232,7 @@ contract TrustfulScorer is ITrustfulScorer {
   }
 
   /// @inheritdoc ITrustfulScorer
-  function getBadgesIds(uint256 scorerId) public view returns (bytes32[] memory) {
+  function getBadgeIds(uint256 scorerId) public view returns (bytes32[] memory) {
     if (!scorerExists(scorerId)) revert ScorerNotRegistered();
     return _scorers[scorerId].badgeIds.values();
   }
@@ -242,7 +242,7 @@ contract TrustfulScorer is ITrustfulScorer {
     Scorer storage scorer = _scorers[scorerId];
     if (scorer.badgeIds.length() == 0) revert ScorerNotRegistered();
 
-    bytes32[] memory badgeIds = getBadgesIds(scorerId);
+    bytes32[] memory badgeIds = getBadgeIds(scorerId);
     uint256[] memory badgeScores = new uint256[](badgeIds.length);
 
     for (uint256 i = 0; i < badgeIds.length; i++) {
