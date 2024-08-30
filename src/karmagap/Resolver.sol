@@ -8,7 +8,7 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 /// @title Resolver
 /// @author KarmaGap | 0xneves.eth
 /// @notice This is the implementation of the Trustful Resolver contract.
-/// This contract is used to resolve scores and badges from Trustful.
+/// This contract is used to resolve scores and badges for Karma Gap Reviews.
 contract Resolver is IResolver, Ownable {
   /// Trustful Scorer contract address
   address public trustfulScorer;
@@ -17,7 +17,7 @@ contract Resolver is IResolver, Ownable {
 
   /// The scorer ID registered in the Trustful Scorer contract.
   /// It must be initialized before start creating stories.
-  /// @dev Create a scorer in TrustfulScorer and set the ID here.
+  /// @dev Create a scorer in TrustfulScorer, then set the ID here.
   /// NOTICE: To pause this contract, set this to zero.
   uint256 public scorerId;
 
@@ -91,7 +91,7 @@ contract Resolver is IResolver, Ownable {
         // if the grant program has already been reviewed by this grant
         // we need to revert the last average score and calculate the new one
         uint256 lastReviewScore = _stories[grantUID][lastStoryIndex - 1].averageScore;
-        uint256 lastAverageScore = getGrantProgramScore(grantProgramUID);
+        uint256 lastAverageScore = getGrantProgramAverageScore(grantProgramUID);
         // A1 = ((X * C ) - A2) / (C - 1)
         uint256 lastLastAverageScore = ceilDiv(
           (lastAverageScore * grantProgram.validReviewCount) - lastReviewScore,
@@ -176,7 +176,7 @@ contract Resolver is IResolver, Ownable {
   /// @inheritdoc IResolver
   function scoreOf(bytes memory data) external view returns (bool success, uint256 score) {
     uint256 grantProgramUID = abi.decode(data, (uint256));
-    return (true, getGrantProgramScore(grantProgramUID));
+    return (true, getGrantProgramAverageScore(grantProgramUID));
   }
 
   /// @inheritdoc IResolver
@@ -212,7 +212,7 @@ contract Resolver is IResolver, Ownable {
   }
 
   /// @inheritdoc IResolver
-  function getGrantProgramScore(uint256 grantProgramUID) public view returns (uint256) {
+  function getGrantProgramAverageScore(uint256 grantProgramUID) public view returns (uint256) {
     GrantProgram memory grantProgram = _grantPrograms[grantProgramUID];
     if (grantProgram.validReviewCount == 0) revert GrantProgramNotReviewed();
     return grantProgram.averageScore;

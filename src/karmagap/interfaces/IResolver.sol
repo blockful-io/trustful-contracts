@@ -84,6 +84,7 @@ interface IResolver {
   /// @param newEasResolverAddr Address of the EAS Resolver contract.
   function setEASResolverAddress(address newEasResolverAddr) external;
 
+  /// @dev This implementation is required by {TrustfulScorer}.
   /// @param grantProgramUID Encoded grant program UID.
   /// @return success If the operation succeeded.
   /// @return score The average score of the grant program.
@@ -121,11 +122,11 @@ interface IResolver {
   /// - The grant program must exist
   /// - The grant program must have at least one review.
   ///
-  /// NOTE: The result will be multiplied by the decimals in the Scorer.
+  /// NOTE: The result is multiplied by the decimals in the Scorer.
   /// Solidity can't handle floating points, so you can get the decimals by
   /// calling {ITrustfulScorer.getScorerDecimals} and dividing the result.
   ///
   /// @param grantProgramUID The ID of the progam.
   /// @return averageScore The average score of the grant program.
-  function getGrantProgramScore(uint256 grantProgramUID) external view returns (uint256);
+  function getGrantProgramAverageScore(uint256 grantProgramUID) external view returns (uint256);
 }
